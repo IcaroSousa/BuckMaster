@@ -6,11 +6,10 @@ from datetime import datetime
 if __name__ == '__main__':
 
     person = Person.Person()
+    print(person.DateOfCreation)
     person.Name = "Icaro"
     person.LastName = "Sousa"
-    person.BirthDay = datetime(1992, 10, 5).date()
-    person.DateOfCreation = datetime.now().date()
-    person.DateOfUpdate = datetime.now().date()
+    person.Id = 10
 
     personDao = PersonDAO()
     list = personDao.listAll()
