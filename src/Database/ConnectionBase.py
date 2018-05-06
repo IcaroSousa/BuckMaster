@@ -10,8 +10,8 @@ class ConnectionBase:
         self._User = pUser
         self._Password = pPassword
 
-        self._Connection = pyodbc.connect(self._getConnectionString())
-        self._Query = self._Connection.cursor()
+        self.__Connection__ = pyodbc.connect(self._getConnectionString())
+        self.__Query__ = self.__Connection__.cursor()
 
     @property
     def _getDriverList(self):
@@ -24,3 +24,15 @@ class ConnectionBase:
                                                                               self._Database,
                                                                               self._User,
                                                                               self._Password)
+
+    def executeQuery(self, pQueryString):
+        self.__Query__.execute(pQueryString)
+        return self.__Query__.fetchall()
+
+    def executeScalar(self, pQueryString):
+        self.__Query__.execute(pQueryString)
+        return self.__Query__.fetchval()
+
+    def executeNonQuery(self, pQueryString):
+        self.__Query__.execute(pQueryString)
+        self.__Connection__.commit()

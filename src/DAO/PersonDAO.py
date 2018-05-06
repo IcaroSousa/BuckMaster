@@ -1,20 +1,42 @@
-from src.Database import SqlServerDb
+from src.Database.SqlServerDb import SqlServerDb
+from src.Models.Person import Person
 
 
 class PersonDAO:
 
     def __init__(self):
-        self.__Db = SqlServerDb.SqlServerDb()
+        self._Db_ = SqlServerDb()
+
+    def _toList_(self, pTuple):
+        result = list()
+
+        for item in pTuple:
+            person = Person()
+            person.Id = item.Id
+            person.DateOfCreation = item.DateOfCreation
+            person.DateOfUpdate = item.DateOfUpdate
+            person.BirthDay = item.BirthDay
+            person.Name = item.Name
+            person.LastName = item.LastName
+
+            result.append(person)
+
+        return result
 
     def listAll(self):
         query = "SELECT * FROM [dbo].[Person]"
-        return self.__Db.executeQuery(query)
+        list = self._Db_.executeQuery(query)
 
-    def addPerson(self, pPersonEntity):
-        query = " INSERT INTO[dbo].[Person](DateOfCreation, DateOfUpdate, Name, LastName, BirthDay)";
-        query = ("{} VALUES(GETDATE(), GETDATE(), '{}', '{}', '{}')".format(query,
-                                                                            pPersonEntity.Name,
-                                                                            pPersonEntity.LastName,
-                                                                            pPersonEntity.BirthDay))
+        if list:
+            return self._toList_(list)
 
-        self.__Db.executeNonQuery(query)
+    def add(self, pEntity):
+        guid = self._Db_.getId()
+        query = " INSERT INTO Person(Id, Name, LastName, BirthDay)"
+        query = ("{} VALUES('{}', '{}', '{}')".format(query,
+                                                      guid,
+                                                      pEntity.Name,
+                                                      pEntity.LastName,
+                                                      pEntity.BirthDay))
+
+        self._Db_.executeNonQuery(query)

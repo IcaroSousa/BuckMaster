@@ -1,26 +1,19 @@
+from src.DAO.ContactTypeDAO import ContactTypeDAO
 from src.DAO.PersonDAO import PersonDAO
-from src.Models import Person
-
-from datetime import datetime
 
 if __name__ == '__main__':
 
-    person = Person.Person()
-    print(person.DateOfCreation)
-    person.Name = "Icaro"
-    person.LastName = "Sousa"
-    person.Id = 10
-
     personDao = PersonDAO()
-    list = personDao.listAll()
+    contactTypeDao = ContactTypeDAO()
 
-    if len(list) > 0:
-        for item in list:
-            print("Id -> {} Name ->{}".format(item[0], item[3]))
+    personlist = list(personDao.listAll())
 
-    personDao.addPerson(person)
-    list = personDao.listAll()
+    if personlist:
+        for per in personlist:
+            print("Id -> {} Name ->{}".format(per.Id, per.Name))
 
-    if len(list) > 0:
-        for item in list:
-            print("Id -> {} Name ->{}".format(item[0], item[3]))
+    contactTypeList = contactTypeDao.listAll()
+
+    if contactTypeList:
+        for cont in contactTypeList:
+            print("Id -> {} Name -> {}, Description -> {}".format(cont.Id, cont.Description, cont.Description))
