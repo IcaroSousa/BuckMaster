@@ -5,7 +5,8 @@ class Contact(EntityBase):
 
     def __init__(self):
         super().__init__()
-        IdPerson = None
-        ContactType = None
-        Contact = None
-        State = None
+        self.IdPerson = None
+        self.ContactType = None
+        self.Placeholder = None
+        self.Contact = None
+        self.State = None

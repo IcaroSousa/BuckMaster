@@ -24,7 +24,7 @@ class PersonDAO:
         return result
 
     def listAll(self):
-        query = "SELECT * FROM [dbo].[Person]"
+        query = "SELECT * FROM Person"
         list = self._Db_.executeQuery(query)
 
         if list:
